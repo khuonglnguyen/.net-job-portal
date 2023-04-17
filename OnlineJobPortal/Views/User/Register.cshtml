@@ -1,0 +1,123 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var listCountry = ViewBag.listCountry as List<OnlineJobPortal.Models.Country>;
+}
+<script src="~/assets/js/vendor/jquery-1.12.4.min.js"></script>
+<section>
+    <div class="container pt-50 pb-40">
+        <div class="row">
+            <div class="col-12 pb-20">
+
+            </div>
+            <div class="col-12">
+                <h2 class="contact-title text-center" id="signup">Sign Up</h2>
+            </div>
+            @if (ViewBag.message == null)
+            {
+                <form action="/User/Register" method="post" id="form-register">
+                    <div class="col-lg-6 mx-auto">
+                        <div class="form-contact contact_form">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h6>Login Information</h6>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Username</label>
+                                        <input name="username" type="text" id="ContentPlaceHolder1_txtUserName" class="form-control" placeholder="Enter Unique Username" required="" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Password</label>
+                                        <input name="password" type="password" id="password" class="form-control" placeholder="Enter Password" required="" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Confirm Password</label>
+                                        <input name="password_confirm" type="password" id="password_confirm" class="form-control" placeholder="Enter Confirm Password" />
+                                        <span id="password_confirm1" style="color:Red;font-size:Small;display:none;">Password & Confirm Password should be same.</span>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <h6>Personal Information</h6>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Full Name</label>
+                                        <input name="name" type="text" id="ContentPlaceHolder1_txtFullName" class="form-control" placeholder="Enter Full Name" required="" />
+                                        <span id="ContentPlaceHolder1_RegularExpressionValidator1" style="color:Red;font-size:Small;display:none;">Name must be in characters</span>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Address</label>
+                                        <textarea name="address" rows="2" cols="20" id="ContentPlaceHolder1_txtAddress" class="form-control" placeholder="Enter Address" required="">
+</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Mobile Number</label>
+                                        <input name="mobile" type="text" id="ContentPlaceHolder1_txtMobile" class="form-control" placeholder="Enter Mobile Number" required="" />
+                                        <span id="ContentPlaceHolder1_RegularExpressionValidator2" style="color:Red;font-size:Small;display:none;">Mobile No. must have 10 digits</span>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input name="email" type="email" id="ContentPlaceHolder1_txtEmail" class="form-control" placeholder="Enter Email" required="" />
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Country</label>
+                                        <select name="country" id="ContentPlaceHolder1_ddlCountry" class="form-control w-100">
+                                            <option value="0">Select Country</option>
+                                            @foreach (var item in listCountry)
+                                            {
+                                                <option value="@item.CountryName">@item.CountryName</option>
+                                            }
+
+
+
+                                        </select>
+                                        <span id="ContentPlaceHolder1_RequiredFieldValidator1" style="color:Red;font-size:Small;display:none;">Country is required</span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mt-3">
+                                <input type="submit" name="ctl00$ContentPlaceHolder1$btnRegister" value="Register" id="submit" class="button button-contactForm boxed-btn mr-4" />
+                                <span class="clickLink"><a href="/User/Login">Already Register? Click Here..</a></span>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            }
+            else
+            {
+                <h3>@ViewBag.message</h3>
+            }
+        </div>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+        $("#form-register").submit(function (e) {
+            var password = $("#password").val();
+            var password_confirm = $("#password_confirm").val();
+
+            if (password !== password_confirm) {
+                $.notify("Password & Confirm Password should be same!", "error");
+                e.preventDefault();
+            }
+        });
+    });
+</script>

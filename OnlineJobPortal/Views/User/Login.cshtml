@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section>
+    <div class="container pt-50 pb-40">
+        <div class="row">
+            <div class="col-12 pb-20">
+
+            </div>
+            <div class="col-12">
+                <h2 class="contact-title text-center">Sign In</h2>
+            </div>
+            <form action="/User/Login" method="post" style="width: 100%">
+                <div class="col-lg-6 mx-auto">
+                    <div class="form-contact contact_form">
+                        <div class="row">
+                            @if (ViewBag.message != null)
+                            {
+                                <span style="text-align: center; width: 100%; color: red;">@ViewBag.message</span>
+                            }
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>Username</label>
+                                    <input name="username" type="text" id="ContentPlaceHolder1_txtUserName" class="form-control" placeholder="Enter Unique Username" required="" />
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input name="password" type="password" id="ContentPlaceHolder1_txtPassword" class="form-control" placeholder="Enter Password" required="" />
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>Login Type</label>
+                                    <select name="ctl00$ContentPlaceHolder1$ddlLoginType" id="ContentPlaceHolder1_ddlLoginType" class="form-control w-100" required>
+                                        <option value="0">Select Login Type</option>
+                                        <option value="1">Admin</option>
+                                        <option value="2">Employer</option>
+                                        <option value="3">User</option>
+                                    </select>
+                                    <span id="ContentPlaceHolder1_RequiredFieldValidator1" style="color:Red;font-size:Small;display:none;">LoginType is required</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mt-3">
+                            <input type="submit" name="ctl00$ContentPlaceHolder1$btnLogin" value="Login" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$ContentPlaceHolder1$btnLogin&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="ContentPlaceHolder1_btnLogin" class="button button-contactForm boxed-btn mr-4" />
+                            <span class="clickLink"><a href="/User/Register">New User? Click Here..</a></span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
