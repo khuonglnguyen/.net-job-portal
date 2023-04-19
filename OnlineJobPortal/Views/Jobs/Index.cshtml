@@ -2,8 +2,11 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var countries = ViewBag.countries as IEnumerable<OnlineJobPortal.Models.Country>;
 }
 <script src="~/assets/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="https://momentjs.com/downloads/moment.min.js"></script>
 
 <main>
 
@@ -47,6 +50,23 @@
                     <div class="job-category-listing mb-50">
                         <!-- single one -->
                         <div class="single-listing">
+                            <div class="small-section-tittle2">
+                                <h4>Job Location</h4>
+                            </div>
+                            <!-- Select job items start -->
+                            <div class="select-job-items2">
+                                <select name="select countries" onchange="handleSelectCountry(value)">
+                                    <option value="">Anywhere</option>
+                                    @foreach (var item in countries)
+                                    {
+                                        <option value="@item.CountryName">@item.CountryName</option>
+                                    }
+                                </select>
+                            </div>
+                            <!--  Select job items End-->
+                        </div>
+                        <!-- single two -->
+                        <div class="single-listing">
                             <!-- select-Categories start -->
                             <div class="select-Categories pb-50">
                                 <div class="small-section-tittle2">
@@ -75,23 +95,6 @@
                             </div>
                             <!-- select-Categories End -->
                         </div>
-                        <!-- single two -->
-                        <div class="single-listing">
-                            <div class="small-section-tittle2">
-                                <h4>Job Location</h4>
-                            </div>
-                            <!-- Select job items start -->
-                            <div class="select-job-items2">
-                                <select name="select">
-                                    <option value="">Anywhere</option>
-                                    <option value="">Category 1</option>
-                                    <option value="">Category 2</option>
-                                    <option value="">Category 3</option>
-                                    <option value="">Category 4</option>
-                                </select>
-                            </div>
-                            <!--  Select job items End-->
-                        </div>
                         <!-- single three -->
                         <div class="single-listing">
                             <!-- select-Categories start -->
@@ -101,32 +104,32 @@
                                 </div>
                                 <label class="container">
                                     Any
-                                    <input type="checkbox">
+                                    <input type="checkbox" class="posted-within" checked="checked active" data-posted="any">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="container">
                                     Today
-                                    <input type="checkbox" checked="checked active">
+                                    <input type="checkbox" class="posted-within" data-posted="today">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="container">
                                     Last 2 days
-                                    <input type="checkbox">
+                                    <input type="checkbox" class="posted-within" data-posted="2days">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="container">
                                     Last 3 days
-                                    <input type="checkbox">
+                                    <input type="checkbox" class="posted-within" data-posted="3days">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="container">
                                     Last 5 days
-                                    <input type="checkbox">
+                                    <input type="checkbox" class="posted-within" data-posted="5days">
                                     <span class="checkmark"></span>
                                 </label>
                                 <label class="container">
                                     Last 10 days
-                                    <input type="checkbox">
+                                    <input type="checkbox" class="posted-within" data-posted="10days">
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
@@ -176,14 +179,14 @@
                                 <div class="single-job-items mb-30">
                                     <div class="job-items">
                                         <div class="company-img">
-                                            <a href="/Jobs/Detail/@item.JobId"><img src="/assets/img/logo/@item.CompanyImage" alt="" style="width:100px"></a>
+                                            <a href="/Jobs/Detail/@item.JobId"><img src="/assets/img/icon/@item.CompanyImage" alt="" style="width:100px"></a>
                                         </div>
                                         <div class="job-tittle job-tittle2">
                                             <a href="/Jobs/Detail/@item.JobId">
                                                 <h4>@item.Title</h4>
                                             </a>
                                             <ul>
-                                                <li>@item.CompanyImage</li>
+                                                <li>@item.CompanyName</li>
                                                 <li><i class="fas fa-map-marker-alt"></i>@item.State, @item.Country</li>
                                                 <li>@item.Salary</li>
                                             </ul>
@@ -191,7 +194,7 @@
                                     </div>
                                     <div class="items-link items-link2 f-right">
                                         <a href="/Jobs/Detail/@item.JobId">@item.JobType</a>
-                                        <span>@item.LastDateToApply</span>
+                                        <span class="CreatedDate" >@item.CreateDate</span>
                                     </div>
                                 </div>
                             }
@@ -227,26 +230,76 @@
 </main>
 
 <script>
+    let typeList = [];
+    let country = "";
+    let withinList = [];
     $(document).ready(function () {
+
+        relativeDate();
+
         $(".job-type").click(function (e) {
-            $("#form-type").submit();
             const jobTypes = $(".job-type");
             const types = [];
             Array.from(jobTypes).forEach(item => {
                 if (item.checked) {
                     types.push(item.dataset.type);
                 }
-            })
+            });
 
+            typeList = types;
 
             $.ajax({
                 type: "POST",
-                data: { types: types },
-                url: "/Jobs",
+                data: { types: typeList, country: country, within: withinList },
+                url: "/Jobs/Filter",
                 success: function (res) {
                     $('.featured-job-area').html(res);
+                    relativeDate();
+                }
+            });
+        });
+
+        $(".posted-within").click(function (e) {
+            const postedWithins = $(".posted-within");
+            const postedWithinsArr = [];
+            Array.from(postedWithins).forEach(item => {
+                if (item.checked) {
+                    postedWithinsArr.push(item.dataset.posted);
+                }
+            });
+
+            withinList = postedWithinsArr
+
+            $.ajax({
+                type: "POST",
+                data: { types: typeList, country: country, within: withinList },
+                url: "/Jobs/Filter",
+                success: function (res) {
+                    $('.featured-job-area').html(res);
+                    relativeDate();
                 }
             });
         });
     });
+
+    function handleSelectCountry(e) {
+        country = e;
+
+        $.ajax({
+            type: "POST",
+            data: { types: typeList, country: e, within: withinList },
+            url: "/Jobs/Filter",
+            success: function (res) {
+                $('.featured-job-area').html(res);
+            }
+        });
+    }
+
+    function relativeDate() {
+        const CreatedDates = $(".CreatedDate");
+        Array.from(CreatedDates).forEach(item => {
+            const date = moment(item.innerHTML);
+            item.innerHTML = date.fromNow();
+        });
+    }
 </script>

@@ -26,14 +26,14 @@
         <div class="single-job-items mb-30">
             <div class="job-items">
                 <div class="company-img">
-                    <a href="/Jobs/Detail/@item.JobId"><img src="/assets/img/logo/@item.CompanyImage" alt="" style="width:100px"></a>
+                    <a href="/Jobs/Detail/@item.JobId"><img src="/assets/img/icon/@item.CompanyImage" alt="" style="width:100px"></a>
                 </div>
                 <div class="job-tittle job-tittle2">
                     <a href="/Jobs/Detail/@item.JobId">
                         <h4>@item.Title</h4>
                     </a>
                     <ul>
-                        <li>@item.CompanyImage</li>
+                        <li>@item.CompanyName</li>
                         <li><i class="fas fa-map-marker-alt"></i>@item.State, @item.Country</li>
                         <li>@item.Salary</li>
                     </ul>
@@ -41,7 +41,7 @@
             </div>
             <div class="items-link items-link2 f-right">
                 <a href="/Jobs/Detail/@item.JobId">@item.JobType</a>
-                <span>@item.LastDateToApply</span>
+                <span class="CreatedDate">@item.CreateDate</span>
             </div>
         </div>
     }

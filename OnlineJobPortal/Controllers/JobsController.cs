@@ -1,6 +1,7 @@
 ﻿using OnlineJobPortal.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -15,16 +16,135 @@ namespace OnlineJobPortal.Controllers
         public ActionResult Index()
         {
             var listJobs = _context.Jobs.ToList();
+            var countries = _context.Countries.OrderBy(x => x.CountryName).ToList();
+            ViewBag.countries = countries;
             return View(listJobs);
         }
 
         [HttpPost]
-        public ActionResult Index(string[] types)
+        public ActionResult Filter(string[] types = null, string country = null, string[] within = null)
         {
+            IEnumerable<Job> jobs = null;
+            jobs = _context.Jobs.ToList();
             if (types != null)
             {
-                var listJobs = _context.Jobs.Where(x => types.Contains(x.JobType)).ToList();
+                jobs = jobs.Where(x => types.Contains(x.JobType)).ToList();
+            }
+
+            if (country != null)
+            {
+                if (country != "")
+                {
+                    jobs = jobs.Where(x => x.Country == country).ToList();
+                }
+            }
+
+            if (within != null)
+            {
+                DateTime date = DateTime.Now;
+                if (within.Last() == "any")
+                {
+
+                }
+                else if (within.Last() == "today")
+                {
+
+                }
+                else if (within.Last() == "2days")
+                {
+                    date = date.AddDays(-2);
+                }
+                else if (within.Last() == "3days")
+                {
+                    date = date.AddDays(-3);
+                }
+                else if (within.Last() == "5days")
+                {
+                    date = date.AddDays(-5);
+                }
+                else if (within.Last() == "10days")
+                {
+                    date = date.AddDays(-10);
+                }
+
+                if (within.Last() == "today")
+                {
+                    jobs = jobs.Where(s => s.CreateDate.Value.Day == date.Day).ToList();
+                }
+                else
+                {
+                    var jobList = _context.Jobs.Where(s => EntityFunctions.TruncateTime(s.CreateDate) <= EntityFunctions.TruncateTime(date)).ToList();
+                    if (jobList.Count > 0)
+                    {
+                        jobs = jobs.Where(x => jobList.Select(j => j.JobId).Contains(x.JobId)).ToList();
+                    }
+                    else
+                    {
+                        jobs = null;
+                    }
+                    return PartialView("JobPartial", jobs);
+                }
+            }
+
+            return PartialView("JobPartial", jobs);
+        }
+
+        [HttpPost]
+        public ActionResult JobCountry(string country)
+        {
+            if (country != "")
+            {
+                var listJobs = _context.Jobs.Where(x => x.Country == country).ToList();
                 return PartialView("JobPartial", listJobs);
+            }
+            else
+            {
+                var listJobs = _context.Jobs.ToList();
+                return PartialView("JobPartial", listJobs);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult JobWithin(string[] within)
+        {
+            if (within != null)
+            {
+                DateTime date = DateTime.Now;
+                if (within.Last() == "any")
+                {
+
+                }
+                else if (within.Last() == "today")
+                {
+
+                }
+                else if (within.Last() == "2days")
+                {
+                    date = date.AddDays(-2);
+                }
+                else if (within.Last() == "3days")
+                {
+                    date = date.AddDays(-3);
+                }
+                else if (within.Last() == "5days")
+                {
+                    date = date.AddDays(-5);
+                }
+                else if (within.Last() == "10days")
+                {
+                    date = date.AddDays(-10);
+                }
+
+                if (within.Last() == "today")
+                {
+                    var listJobs = _context.Jobs.Where(s => s.CreateDate.Value.Day == date.Day).ToList();
+                    return PartialView("JobPartial", listJobs);
+                }
+                else
+                {
+                    var listJobs = _context.Jobs.Where(s => EntityFunctions.TruncateTime(s.CreateDate) <= EntityFunctions.TruncateTime(date)).ToList();
+                    return PartialView("JobPartial", listJobs);
+                }
             }
             else
             {

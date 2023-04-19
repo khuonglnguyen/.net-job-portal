@@ -322,6 +322,7 @@
     <Content Include="assets\js\popper.min.js" />
     <Content Include="assets\js\price_rangs.js" />
     <Content Include="assets\js\slick.min.js" />
+    <Content Include="assets\js\timestamp-tag-min.js" />
     <Content Include="assets\js\vendor\jquery-1.12.4.min.js" />
     <Content Include="assets\js\vendor\modernizr-3.5.0.min.js" />
     <Content Include="assets\js\wow.min.js" />
