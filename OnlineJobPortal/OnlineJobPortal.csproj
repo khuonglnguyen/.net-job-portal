@@ -415,6 +415,7 @@
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Jobs\Index.cshtml" />
     <Content Include="Views\Jobs\Detail.cshtml" />
+    <Content Include="Views\Jobs\JobPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
