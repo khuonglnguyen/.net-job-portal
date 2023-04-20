@@ -104,5 +104,13 @@ namespace OnlineJobPortal.Controllers
 
             return Redirect("/Admin/Jobs");
         }
+
+        public ActionResult DeleteJobs(int id)
+        {
+            var job = _context.Jobs.Find(id);
+            _context.Jobs.Remove(job);
+            _context.SaveChanges();
+            return Redirect("/Admin/Jobs");
+        }
     }
 }
