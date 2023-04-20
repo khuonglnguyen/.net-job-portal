@@ -1,0 +1,52 @@
+﻿@model IEnumerable<OnlineJobPortal.Models.User>
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int count = 1;
+}
+
+<div style="background-image: url('../Images/bg.jpg'); width: 100%; height: 720px; background-repeat: no-repeat; background-size: cover; background-attachment: fixed;">
+    <div class="container-fluid pt-4 pb-4">
+        <div>
+            <span id="ContentPlaceHolder1_lblMsg"></span>
+        </div>
+
+        <h3 class="text-center">User List/Details</h3>
+
+        <div class="row mb-3 pt-sm-3">
+            <div class="col-md-12">
+                <div>
+                    <table class="table table-hover table-bordered" cellspacing="0" rules="all" border="1" id="ContentPlaceHolder1_GridView1" style="border-collapse:collapse;">
+                        <tr align="center" style="color:White;background-color:#7200CF;">
+                            <th scope="col">Sr.No</th>
+                            <th scope="col">User Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Mobile No.</th>
+                            <th scope="col">Country</th>
+                            <th scope="col">Delete</th>
+                        </tr>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td align="center">@(count++)</td>
+                                <td align="center">@item.Username</td>
+                                <td align="center">@item.Email</td>
+                                <td align="center">@item.Mobile</td>
+                                <td align="center">@item.Country</td>
+                                @if (item.RoleId != 1)
+                                {
+                                    <td align="center" onclick="location = '/Admin/DeleteUser/@item.UserId'"><input type="image" src="../assets/img/icon/trashIcon.png" alt="Delete" style="height:25px;width:25px;" /></td>
+                                }
+                                else
+                                {
+                                    <td align="center"><input type="image" src="../assets/img/icon/trashIcon.png" alt="Delete" style="height:25px;width:25px;opacity:0.5;cursor:default" /></td>
+                                }
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
