@@ -435,6 +435,7 @@
     <Content Include="Views\Admin\Resume.cshtml" />
     <Content Include="Views\Admin\Users.cshtml" />
     <Content Include="Views\Admin\UserRole.cshtml" />
+    <Content Include="Views\Admin\ContactList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

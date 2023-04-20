@@ -172,5 +172,19 @@ namespace OnlineJobPortal.Controllers
             _context.SaveChanges();
             return Redirect("/Admin/UserRole");
         }
+
+        public ActionResult ContactList()
+        {
+            var contacts = _context.Contacts.ToList();
+            return View(contacts);
+        }
+
+        public ActionResult DeleteContact(int id)
+        {
+            var contact = _context.Contacts.Find(id);
+            _context.Contacts.Remove(contact);
+            _context.SaveChanges();
+            return Redirect("/Admin/ContactList");
+        }
     }
 }
