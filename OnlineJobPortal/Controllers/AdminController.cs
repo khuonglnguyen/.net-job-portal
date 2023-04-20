@@ -140,5 +140,37 @@ namespace OnlineJobPortal.Controllers
             _context.SaveChanges();
             return Redirect("/Admin/Users");
         }
+        
+        public ActionResult UserRole(int role = 0)
+        {
+            ViewBag.roles = _context.Roles.ToList();
+            if (role != null && role != 0)
+            {
+                if (role == -1)
+                {
+                    var users = _context.Users.ToList();
+                    return View(users);
+                }
+                else
+                {
+                    var users = _context.Users.Where(x => x.RoleId == role).ToList();
+                    return View(users);
+                }
+            }
+            else
+            {
+                var users = _context.Users.ToList();
+                return View(users);
+            }
+        }
+
+        public ActionResult UserUpdateRole(int userId, string role)
+        {
+            var user = _context.Users.Find(userId);
+            var r = _context.Roles.SingleOrDefault(x=>x.RoleName == role);
+            user.RoleId = r.RoleId;
+            _context.SaveChanges();
+            return Redirect("/Admin/UserRole");
+        }
     }
 }
