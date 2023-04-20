@@ -1,0 +1,153 @@
+﻿
+@{
+    ViewBag.Title = "NewJobs";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div style="background-image: url('../Images/bg.jpg'); width: 100%; height: 720px; background-repeat: no-repeat; background-size: cover; background-attachment: fixed;">
+    <div class="container pt-4 pb-4">
+
+        <div class="btn-toolbar justify-content-between mb-3">
+            <div class="btn-group">
+                <span id="ContentPlaceHolder1_lblMsg"></span>
+            </div>
+            <div class="input-group h-25">
+
+            </div>
+        </div>
+
+        <h3 class="text-center">Add Job</h3>
+        <form action="/Admin/NewJobs" method="post" enctype="multipart/form-data">
+            <div class="row mr-lg-5 ml-lg-5 mb-3">
+                <div class="col-md-6 pt-3">
+                    <label for="txtJobTitle" style="font-weight: 600">Job Title</label>
+                    <input name="title" type="text" id="ContentPlaceHolder1_txtJobTitle" class="form-control" placeholder="Ex. Web Developer,App Developer" required="" />
+                </div>
+                <div class="col-md-6 pt-3">
+                    <label for="txtNoOfPost" style="font-weight: 600">Number Of Post</label>
+                    <input name="noofpost" type="number" id="ContentPlaceHolder1_txtNoOfPost" class="form-control" placeholder="Enter Number Of Position" required="" />
+                </div>
+            </div>
+
+            <div class="row mr-lg-5 ml-lg-5 mb-3">
+                <div class="col-md-12 pt-3">
+                    <label for="txtDescription" style="font-weight: 600">Description</label>
+                    <textarea name="description" rows="2" cols="20" id="ContentPlaceHolder1_txtDescription" class="form-control" placeholder="Enter Job Description" required="">
+</textarea>
+                </div>
+            </div>
+
+            <div class="row mr-lg-5 ml-lg-5 mb-3">
+                <div class="col-md-6 pt-3">
+                    <label for="txtQualification" style="font-weight: 600">Qualification/Education Required</label>
+                    <input name="qualification" type="text" id="ContentPlaceHolder1_txtQualification" class="form-control" placeholder="Ex. MCA, BTech, MBA" required="" />
+                </div>
+                <div class="col-md-6 pt-3">
+                    <label for="txtExperience" style="font-weight: 600">Experience Required</label>
+                    <input name="experience" type="text" id="ContentPlaceHolder1_txtExperience" class="form-control" placeholder="Ex: 2 Years, 1.5 Years" required="" />
+                </div>
+            </div>
+
+            <div class="row mr-lg-5 ml-lg-5 mb-3">
+                <div class="col-md-6 pt-3">
+                    <label for="txtSpecialization" style="font-weight: 600">Specialization Required</label>
+                    <textarea name="specialization" rows="2" cols="20" id="ContentPlaceHolder1_txtSpecialization" class="form-control" placeholder="Enter Specialization" required="">
+</textarea>
+                </div>
+                <div class="col-md-6 pt-3">
+                    <label for="txtLastDate" style="font-weight: 600">Last Date To Apply</label>
+                    <input name="lastDateToApply" type="date" id="ContentPlaceHolder1_txtLastDate" class="form-control" placeholder="Enter Last Date To Apply" required="" />
+                </div>
+            </div>
+
+            <div class="row mr-lg-5 ml-lg-5 mb-3">
+                <div class="col-md-6 pt-3">
+                    <label for="txtSalary" style="font-weight: 600">Salary</label>
+                    <input name="salary" type="text" id="ContentPlaceHolder1_txtSalary" class="form-control" placeholder="Ex: 25000/Month, 7L/Year" required="" />
+                </div>
+                <div class="col-md-6 pt-3">
+                    <label for="ddlJobType" style="font-weight: 600">Job Type</label>
+                    <select name="jobType" id="ContentPlaceHolder1_ddlJobType" class="form-control">
+                        <option value="0">Select Job Type</option>
+                        <option value="Full Time">Full Time</option>
+                        <option value="Part Time">Part Time</option>
+                        <option value="Remote">Remote</option>
+                        <option value="Freelance">Freelance</option>
+
+                    </select>
+                    <span id="ContentPlaceHolder1_RequiredFieldValidator1" style="color:Red;display:none;">JobType is required</span>
+                </div>
+            </div>
+
+            <div class="row mr-lg-5 ml-lg-5 mb-3">
+                <div class="col-md-6 pt-3">
+                    <label for="txtCompany" style="font-weight: 600">Company/Organisation Name</label>
+                    <input name="companyName" type="text" id="ContentPlaceHolder1_txtCompany" class="form-control" placeholder="Enter Company/Organisation Name" required="" />
+                </div>
+                <div class="col-md-6 pt-3">
+                    <label for="ddlJobType" style="font-weight: 600">Company/Organisation Logo</label>
+                    <input type="file" name="companyImage" id="ContentPlaceHolder1_fuCompanyLogo" title=".jpg, .jpeg, .png extension only" class="form-control" />
+                </div>
+            </div>
+
+            <div class="row mr-lg-5 ml-lg-5 mb-3">
+                <div class="col-md-6 pt-3">
+                    <label for="txtWebsite" style="font-weight: 600">Website</label>
+                    <input name="website" type="url" id="ContentPlaceHolder1_txtWebsite" class="form-control" placeholder="Enter Website" />
+                </div>
+                <div class="col-md-6 pt-3">
+                    <label for="txtEmail" style="font-weight: 600">Email</label>
+                    <input name="email" type="email" id="ContentPlaceHolder1_txtEmail" class="form-control" placeholder="Enter Email" />
+                </div>
+            </div>
+
+            <div class="row mr-lg-5 ml-lg-5 mb-3">
+                <div class="col-md-12 pt-3">
+                    <label for="txtAddress" style="font-weight: 600">Address</label>
+                    <textarea name="address" rows="2" cols="20" id="ContentPlaceHolder1_txtAddress" class="form-control" placeholder="Enter Work Location" required="">
+</textarea>
+                </div>
+            </div>
+
+            <div class="row mr-lg-5 ml-lg-5 mb-3">
+                <div class="col-md-6 pt-3">
+                    <label for="txtWebsite" style="font-weight: 600">Country</label>
+                    <select name="country" id="ContentPlaceHolder1_ddlCountry" class="form-control w-100">
+                        <option value="0">Select Country</option>
+                        <option value="India">India</option>
+                        <option value="United States">United States</option>
+                        <option value="Bangladesh">Bangladesh</option>
+                        <option value="Sri Lanka">Sri Lanka</option>
+                        <option value="Pakistan">Pakistan</option>
+                        <option value="China">China</option>
+                        <option value="Brazil">Brazil</option>
+                        <option value="Egypt">Egypt</option>
+                        <option value="South Africa">South Africa</option>
+                        <option value="Japan">Japan</option>
+                        <option value="Canada">Canada</option>
+                        <option value="Germany">Germany</option>
+                        <option value="Australia">Australia</option>
+                        <option value="Malaysia">Malaysia</option>
+                        <option value="Philippines">Philippines</option>
+
+                    </select>
+                    <span id="ContentPlaceHolder1_RequiredFieldValidator2" style="color:Red;font-size:Small;display:none;">Country is required</span>
+
+                </div>
+                <div class="col-md-6 pt-3">
+                    <label for="txtState" style="font-weight: 600">State</label>
+                    <input name="state" type="text" id="ContentPlaceHolder1_txtState" class="form-control" placeholder="Enter State" required="" />
+                </div>
+            </div>
+
+            <div class="row mr-lg-5 ml-lg-5 mb-3 pt-4">
+                <div class="col-md-3 col-md-offset-2 mb-3">
+                    <input type="submit" name="ctl00$ContentPlaceHolder1$btnAdd" value="Add Job" class="btn btn-primary btn-block" style="background-color:#7200CF;" />
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
+</div>

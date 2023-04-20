@@ -222,6 +222,10 @@
     <Content Include="assets\img\comment\comment_2.png" />
     <Content Include="assets\img\comment\comment_3.png" />
     <Content Include="assets\img\hero\h1_hero1.jpg" />
+    <Content Include="assets\img\icon\cancel.png" />
+    <Content Include="assets\img\icon\editPencil.png" />
+    <Content Include="assets\img\icon\tick.png" />
+    <Content Include="assets\img\icon\trashIcon.png" />
     <Content Include="assets\img\logo\fdsf.jpg" />
     <Content Include="assets\img\elements\a.jpg" />
     <Content Include="assets\img\elements\a2.jpg" />
@@ -425,6 +429,8 @@
     <Content Include="Views\About\Index.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\NewJobs.cshtml" />
+    <Content Include="Views\Admin\Jobs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -1,6 +1,7 @@
 ﻿using OnlineJobPortal.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -18,6 +19,44 @@ namespace OnlineJobPortal.Controllers
             ViewBag.AppliedJobs = _context.AppliedJobs.Count();
             ViewBag.ContactedUsers = _context.Contacts.Count();
             return View();
+        }
+
+        public ActionResult NewJobs()
+        {
+            ViewBag.TotalUsers = _context.Users.Count();
+            ViewBag.TotalJobs = _context.Jobs.Count();
+            ViewBag.AppliedJobs = _context.AppliedJobs.Count();
+            ViewBag.ContactedUsers = _context.Contacts.Count();
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult NewJobs(Job job, HttpPostedFileBase companyImage)
+        {
+            //Get file name
+            var fileName = Path.GetFileName(companyImage.FileName);
+            //Get path
+            var path = Path.Combine(Server.MapPath("~/assets/img/icon"), fileName);
+            //Check exitst
+            if (!System.IO.File.Exists(path))
+            {
+                //Add image into folder
+                companyImage.SaveAs(path);
+            }
+
+            job.CreateDate = DateTime.Now;
+            job.CreatedBy = (Session["User"] as User).UserId;
+            job.CompanyImage = fileName;
+            _context.Jobs.Add(job);
+            _context.SaveChanges();
+
+            return Redirect("/Admin/Jobs");
+        }
+
+        public ActionResult Jobs()
+        {
+            var list = _context.Jobs.ToList();
+            return View(list);
         }
     }
 }
