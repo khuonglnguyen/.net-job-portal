@@ -58,7 +58,7 @@ $(document).ready(function(){
                 $(form).ajaxSubmit({
                     type:"POST",
                     data: $(form).serialize(),
-                    url:"contact_process.php",
+                    url:"/Contact",
                     success: function() {
                         $('#contactForm :input').attr('disabled', 'disabled');
                         $('#contactForm').fadeTo( "slow", 1, function() {
@@ -68,6 +68,7 @@ $(document).ready(function(){
                             $('.modal').modal('hide');
 		                	$('#success').modal('show');
                         })
+                        $(".alert").show();
                     },
                     error: function() {
                         $('#contactForm').fadeTo( "slow", 1, function() {
