@@ -41,12 +41,16 @@ namespace OnlineJobPortal.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(User user)
+        public ActionResult Login(User user, int role)
         {
             var check = _context.Users.SingleOrDefault(x => x.Username == user.Username && x.Password == user.Password);
             if (check != null)
             {
                 Session["User"] = check;
+                if (check.RoleId == role && (role == 1 || role == 2))
+                {
+                    return Redirect("/admin");
+                }
                 return Redirect("/");
             }
             ViewBag.message = "Username or Password is incorrect!";
