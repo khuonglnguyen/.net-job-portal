@@ -112,5 +112,19 @@ namespace OnlineJobPortal.Controllers
             _context.SaveChanges();
             return Redirect("/Admin/Jobs");
         }
+
+        public ActionResult Resume()
+        {
+            var appliedJobs = _context.AppliedJobs.ToList();
+            return View(appliedJobs);
+        }
+
+        public ActionResult DeleteResume(int id)
+        {
+            var appliedJob = _context.AppliedJobs.Find(id);
+            _context.AppliedJobs.Remove(appliedJob);
+            _context.SaveChanges();
+            return Redirect("/Admin/Resume");
+        }
     }
 }
