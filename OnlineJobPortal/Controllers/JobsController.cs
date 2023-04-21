@@ -16,14 +16,20 @@ namespace OnlineJobPortal.Controllers
         public ActionResult Index()
         {
             var listJobs = _context.Jobs.ToList();
-            var countries = _context.Countries.OrderBy(x => x.CountryName).ToList();
-            ViewBag.countries = countries;
             var user = Session["User"] as User != null ? Session["User"] as User : null;
             if (user != null)
             {
                 var favouriteJobs = _context.FavouriteJobs.Where(x => x.UserId == user.UserId).ToList();
                 ViewBag.favouriteJobs = favouriteJobs;
             }
+
+            if (Session["Suggest"] != null)
+            {
+                listJobs = listJobs.Where(x => x.Country == user.Country).ToList();
+            }
+
+            var countries = _context.Countries.OrderBy(x => x.CountryName).ToList();
+            ViewBag.countries = countries;
             return View(listJobs);
         }
 
@@ -97,6 +103,12 @@ namespace OnlineJobPortal.Controllers
                 var favouriteJobs = _context.FavouriteJobs.Where(x => x.UserId == user.UserId).ToList();
                 TempData["favouriteJobs"] = favouriteJobs;
             }
+
+            if (Session["Suggest"] != null)
+            {
+                jobs = jobs.Where(x => x.Country == user.Country).ToList();
+            }
+
             return PartialView("JobPartial", jobs);
         }
 
@@ -146,6 +158,19 @@ namespace OnlineJobPortal.Controllers
             {
                 _context.FavouriteJobs.Remove(check);
                 _context.SaveChanges();
+            }
+            return Redirect("/Jobs");
+        }
+
+        public ActionResult Suggest()
+        {
+            if (Session["Suggest"] != null)
+            {
+                Session["Suggest"] = null;
+            }
+            else
+            {
+                Session["Suggest"] = true;
             }
             return Redirect("/Jobs");
         }

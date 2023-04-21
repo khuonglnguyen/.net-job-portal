@@ -159,6 +159,21 @@
                                 <div class="col-lg-12">
                                     <div class="count-job mb-35">
                                         <span>@Model.Count() Jobs found</span>
+                                        @if (Session["User"] != null)
+                                        {
+                                            if (Session["Suggest"] != null)
+                                            {
+                                                <div class="items-link items-link2 f-right">
+                                                    <a href="/Jobs/Suggest/" style="background-color: #8b92dd;color:white">Hide My Suggest Jobs</a>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="items-link items-link2 f-right">
+                                                    <a href="/Jobs/Suggest/">Show My Suggest Jobs</a>
+                                                </div>
+                                            }
+                                        }
                                         <!-- Select job items start -->
                                         @*<div class="select-job-items">
                                                 <span>Sort by</span>
