@@ -28,9 +28,9 @@ namespace OnlineJobPortal.Models
         public virtual DbSet<AppliedJob> AppliedJobs { get; set; }
         public virtual DbSet<Contact> Contacts { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
+        public virtual DbSet<FavouriteJob> FavouriteJobs { get; set; }
         public virtual DbSet<Job> Jobs { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<User> Users { get; set; }
     }
 }

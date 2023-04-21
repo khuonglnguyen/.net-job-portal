@@ -18,6 +18,7 @@ namespace OnlineJobPortal.Models
         public User()
         {
             this.AppliedJobs = new HashSet<AppliedJob>();
+            this.FavouriteJobs = new HashSet<FavouriteJob>();
         }
     
         public int UserId { get; set; }
@@ -40,6 +41,8 @@ namespace OnlineJobPortal.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AppliedJob> AppliedJobs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FavouriteJob> FavouriteJobs { get; set; }
         public virtual Role Role { get; set; }
     }
 }

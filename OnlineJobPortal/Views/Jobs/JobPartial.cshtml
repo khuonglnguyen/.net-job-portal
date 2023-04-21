@@ -1,4 +1,7 @@
 ﻿@model IEnumerable<OnlineJobPortal.Models.Job>
+@{
+    var favouriteJobs = TempData["favouriteJobs"] as IEnumerable<OnlineJobPortal.Models.FavouriteJob>;
+}
 <div class="container">
     <!-- Count of Job list Start -->
     <div class="row">
@@ -37,6 +40,21 @@
                         <li><i class="fas fa-map-marker-alt"></i>@item.State, @item.Country</li>
                         <li>@item.Salary</li>
                     </ul>
+                    @if (favouriteJobs != null && favouriteJobs.Any(x => x.JobId == item.JobId))
+                    {
+                        <i class="fas fa-heart" style="color:red;cursor:pointer" onclick="location = '/Jobs/AddFavouriteJob/@item.JobId'"></i>
+                    }
+                    else
+                    {
+                        if (Session["User"] != null)
+                        {
+                            <i class="fa fa-heart" style="color:gray;cursor:pointer;" onclick="location = '/Jobs/AddFavouriteJob/@item.JobId'"></i>
+                        }
+                        else
+                        {
+                            <i class="fas fa-heart" style="color: gray; cursor: default"></i>
+                        }
+                    }
                 </div>
             </div>
             <div class="items-link items-link2 f-right">

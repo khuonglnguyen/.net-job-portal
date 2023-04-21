@@ -146,6 +146,9 @@
     <Compile Include="Models\Country.cs">
       <DependentUpon>JobPortal.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FavouriteJob.cs">
+      <DependentUpon>JobPortal.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Job.cs">
       <DependentUpon>JobPortal.tt</DependentUpon>
     </Compile>
@@ -165,9 +168,6 @@
       <DependentUpon>JobPortal.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Role.cs">
-      <DependentUpon>JobPortal.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>JobPortal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">

@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     var countries = ViewBag.countries as IEnumerable<OnlineJobPortal.Models.Country>;
+    var favouriteJobs = ViewBag.favouriteJobs as IEnumerable<OnlineJobPortal.Models.FavouriteJob>;
 }
 <script src="~/assets/js/vendor/jquery-1.12.4.min.js"></script>
 <script src="https://momentjs.com/downloads/moment.min.js"></script>
@@ -135,16 +136,16 @@
                             </div>
                             <!-- select-Categories End -->
                         </div>
-                        <div class="single-listing">
-                            <!-- Range Slider Start -->
-                            <aside class="left_widgets p_filter_widgets price_rangs_aside sidebar_box_shadow">
-                                <div class="small-section-tittle2" style="text-align: center">
-                                    <a href="/User/Register" class="btn" style="width:150px">Filter</a>
-                                    <a href="/User/Login" class="btn head-btn2" style="width:150px">Reset</a>
-                                </div>
-                            </aside>
-                            <!-- Range Slider End -->
-                        </div>
+                        <!--<div class="single-listing">-->
+                        <!-- Range Slider Start -->
+                        <!--<aside class="left_widgets p_filter_widgets price_rangs_aside sidebar_box_shadow">
+                            <div class="small-section-tittle2" style="text-align: center">
+                                <a href="/User/Register" class="btn" style="width:150px">Filter</a>
+                                <a href="/User/Login" class="btn head-btn2" style="width:150px">Reset</a>
+                            </div>
+                        </aside>-->
+                        <!-- Range Slider End -->
+                        <!--</div>-->
                     </div>
                     <!-- Job Category Listing End -->
                 </div>
@@ -190,11 +191,26 @@
                                                 <li><i class="fas fa-map-marker-alt"></i>@item.State, @item.Country</li>
                                                 <li>@item.Salary</li>
                                             </ul>
+                                            @if (favouriteJobs != null && favouriteJobs.Any(x => x.JobId == item.JobId))
+                                            {
+                                                <i class="fas fa-heart" style="color:red;cursor:pointer" onclick="location = '/Jobs/AddFavouriteJob/@item.JobId'"></i>
+                                            }
+                                            else
+                                            {
+                                                if (Session["User"] != null)
+                                                {
+                                                    <i class="fa fa-heart" style="color:gray;cursor:pointer;" onclick="location = '/Jobs/AddFavouriteJob/@item.JobId'"></i>
+                                                }
+                                                else
+                                                {
+                                                    <i class="fas fa-heart" style="color: gray; cursor: default"></i>
+                                                }
+                                            }
                                         </div>
                                     </div>
                                     <div class="items-link items-link2 f-right">
                                         <a href="/Jobs/Detail/@item.JobId">@item.JobType</a>
-                                        <span class="CreatedDate" >@item.CreateDate</span>
+                                        <span class="CreatedDate">@item.CreateDate</span>
                                     </div>
                                 </div>
                             }
@@ -207,24 +223,24 @@
     </div>
     <!-- Job List Area End -->
     <!--Pagination Start  -->
-    <div class="pagination-area pb-115 text-center">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="single-wrap d-flex justify-content-center">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-start">
-                                <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                                <li class="page-item"><a class="page-link" href="#">02</a></li>
-                                <li class="page-item"><a class="page-link" href="#">03</a></li>
-                                <li class="page-item"><a class="page-link" href="#"><span class="ti-angle-right"></span></a></li>
-                            </ul>
-                        </nav>
+    @*<div class="pagination-area pb-115 text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="single-wrap d-flex justify-content-center">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-start">
+                                    <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">02</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">03</a></li>
+                                    <li class="page-item"><a class="page-link" href="#"><span class="ti-angle-right"></span></a></li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </div>*@
     <!--Pagination End  -->
 
 </main>

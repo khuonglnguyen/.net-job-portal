@@ -18,6 +18,12 @@ namespace OnlineJobPortal.Controllers
             var listJobs = _context.Jobs.ToList();
             var countries = _context.Countries.OrderBy(x => x.CountryName).ToList();
             ViewBag.countries = countries;
+            var user = Session["User"] as User != null ? Session["User"] as User : null;
+            if (user != null)
+            {
+                var favouriteJobs = _context.FavouriteJobs.Where(x => x.UserId == user.UserId).ToList();
+                ViewBag.favouriteJobs = favouriteJobs;
+            }
             return View(listJobs);
         }
 
@@ -41,7 +47,7 @@ namespace OnlineJobPortal.Controllers
 
             if (within != null)
             {
-                DateTime date = DateTime.Now;
+                DateTime date = DateTime.Now.Date;
                 if (within.Last() == "any")
                 {
 
@@ -73,7 +79,7 @@ namespace OnlineJobPortal.Controllers
                 }
                 else
                 {
-                    var jobList = _context.Jobs.Where(s => EntityFunctions.TruncateTime(s.CreateDate) <= EntityFunctions.TruncateTime(date)).ToList();
+                    var jobList = _context.Jobs.Where(s => EntityFunctions.TruncateTime(s.CreateDate) >= EntityFunctions.TruncateTime(date)).ToList();
                     if (jobList.Count > 0)
                     {
                         jobs = jobs.Where(x => jobList.Select(j => j.JobId).Contains(x.JobId)).ToList();
@@ -82,75 +88,16 @@ namespace OnlineJobPortal.Controllers
                     {
                         jobs = null;
                     }
-                    return PartialView("JobPartial", jobs);
                 }
             }
 
+            var user = Session["User"] as User != null ? Session["User"] as User : null;
+            if (user != null)
+            {
+                var favouriteJobs = _context.FavouriteJobs.Where(x => x.UserId == user.UserId).ToList();
+                TempData["favouriteJobs"] = favouriteJobs;
+            }
             return PartialView("JobPartial", jobs);
-        }
-
-        [HttpPost]
-        public ActionResult JobCountry(string country)
-        {
-            if (country != "")
-            {
-                var listJobs = _context.Jobs.Where(x => x.Country == country).ToList();
-                return PartialView("JobPartial", listJobs);
-            }
-            else
-            {
-                var listJobs = _context.Jobs.ToList();
-                return PartialView("JobPartial", listJobs);
-            }
-        }
-
-        [HttpPost]
-        public ActionResult JobWithin(string[] within)
-        {
-            if (within != null)
-            {
-                DateTime date = DateTime.Now;
-                if (within.Last() == "any")
-                {
-
-                }
-                else if (within.Last() == "today")
-                {
-
-                }
-                else if (within.Last() == "2days")
-                {
-                    date = date.AddDays(-2);
-                }
-                else if (within.Last() == "3days")
-                {
-                    date = date.AddDays(-3);
-                }
-                else if (within.Last() == "5days")
-                {
-                    date = date.AddDays(-5);
-                }
-                else if (within.Last() == "10days")
-                {
-                    date = date.AddDays(-10);
-                }
-
-                if (within.Last() == "today")
-                {
-                    var listJobs = _context.Jobs.Where(s => s.CreateDate.Value.Day == date.Day).ToList();
-                    return PartialView("JobPartial", listJobs);
-                }
-                else
-                {
-                    var listJobs = _context.Jobs.Where(s => EntityFunctions.TruncateTime(s.CreateDate) <= EntityFunctions.TruncateTime(date)).ToList();
-                    return PartialView("JobPartial", listJobs);
-                }
-            }
-            else
-            {
-                var listJobs = _context.Jobs.ToList();
-                return PartialView("JobPartial", listJobs);
-            }
         }
 
         public ActionResult Detail(int id)
@@ -181,6 +128,26 @@ namespace OnlineJobPortal.Controllers
 
             TempData["message"] = "Job applied successfull!";
             return RedirectToAction("Detail", new { id = id });
+        }
+
+        public ActionResult AddFavouriteJob(int id)
+        {
+            var user = Session["User"] as User;
+            var check = _context.FavouriteJobs.SingleOrDefault(x => x.UserId == user.UserId && x.JobId == id);
+            if (check == null)
+            {
+                FavouriteJob favourite = new FavouriteJob();
+                favourite.UserId = user.UserId;
+                favourite.JobId = id;
+                _context.FavouriteJobs.Add(favourite);
+                _context.SaveChanges();
+            }
+            else
+            {
+                _context.FavouriteJobs.Remove(check);
+                _context.SaveChanges();
+            }
+            return Redirect("/Jobs");
         }
     }
 }
