@@ -11,6 +11,11 @@ namespace OnlineJobPortal.Controllers
     {
         JobPortalDBEntities _context = new JobPortalDBEntities();
         // GET: User
+        public ActionResult Profile()
+        {
+            var user = Session["User"] as User;
+            return View(user);
+        }
         public ActionResult Register()
         {
             var listCountry = _context.Countries.ToList();
