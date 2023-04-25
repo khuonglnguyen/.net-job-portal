@@ -37,9 +37,18 @@
                                 <td align="center">@item.User.Email</td>
                                 <td align="center">@item.User.Mobile</td>
                                 <td align="center">
-                                    <a id="ContentPlaceHolder1_GridView1_HyperLink1_0">
-                                        <i class="fas fa-download"></i>Download
-                                    </a>
+                                    @if (item.User.Resume != null)
+                                    {
+                                        <a id="ContentPlaceHolder1_GridView1_HyperLink1_0" href="#" onclick="window.open('/Resume/@item.User.Resume', '_blank');">
+                                            <i class="fas fa-download"></i>Download
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a id="ContentPlaceHolder1_GridView1_HyperLink1_0" href="#" >
+                                            <i class="fas fa-download" style="opacity:0.5;cursor:default;"></i>Download
+                                        </a>
+                                    }
 
                                 </td>
                                 <td align="center" onclick="location = '/Admin/DeleteResume/@item.AppliedJobId'"><input type="image" src="../assets/img/icon/trashIcon.png" alt="Delete" onclick="javascript:__doPostBack(&#39;ctl00$ContentPlaceHolder1$GridView1&#39;,&#39;Delete$0&#39;);return false;" style="height:25px;width:25px;" /></td>
