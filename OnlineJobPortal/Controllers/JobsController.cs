@@ -1,4 +1,5 @@
-﻿using OnlineJobPortal.Models;
+﻿using Microsoft.Ajax.Utilities;
+using OnlineJobPortal.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
@@ -83,7 +84,7 @@ namespace OnlineJobPortal.Controllers
                 {
                     jobs = jobs.Where(s => s.CreateDate.Value.Day == date.Day).ToList();
                 }
-                else
+                else if (within.Last() != "any")
                 {
                     var jobList = _context.Jobs.Where(s => EntityFunctions.TruncateTime(s.CreateDate) >= EntityFunctions.TruncateTime(date)).ToList();
                     if (jobList.Count > 0)

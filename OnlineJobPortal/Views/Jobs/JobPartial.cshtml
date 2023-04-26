@@ -7,7 +7,10 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="count-job mb-35">
-                <span>@Model.Count() Jobs found</span>
+                @if (Model != null && Model.Count() > 0)
+                {
+                    <span>@Model.Count() Jobs found</span>
+                }
                 @if (Session["User"] != null)
                 {
                     if (Session["Suggest"] != null)
@@ -25,57 +28,60 @@
                 }
                 <!-- Select job items start -->
                 @*<div class="select-job-items">
-            <span>Sort by</span>
-            <select name="select">
-                <option value="">None</option>
-                <option value="">job list</option>
-                <option value="">job list</option>
-                <option value="">job list</option>
-            </select>
-        </div>*@
+                        <span>Sort by</span>
+                        <select name="select">
+                            <option value="">None</option>
+                            <option value="">job list</option>
+                            <option value="">job list</option>
+                            <option value="">job list</option>
+                        </select>
+                    </div>*@
                 <!--  Select job items End-->
             </div>
         </div>
     </div>
     <!-- Count of Job list End -->
-    @foreach (var item in Model)
+    @if (Model != null && Model.Count() > 0)
     {
-        <!-- single-job-content -->
-        <div class="single-job-items mb-30">
-            <div class="job-items">
-                <div class="company-img">
-                    <a href="/Jobs/Detail/@item.JobId"><img src="/assets/img/icon/@item.CompanyImage" alt="" style="width:100px"></a>
-                </div>
-                <div class="job-tittle job-tittle2">
-                    <a href="/Jobs/Detail/@item.JobId">
-                        <h4>@item.Title</h4>
-                    </a>
-                    <ul>
-                        <li>@item.CompanyName</li>
-                        <li><i class="fas fa-map-marker-alt"></i>@item.State, @item.Country</li>
-                        <li>@item.Salary</li>
-                    </ul>
-                    @if (favouriteJobs != null && favouriteJobs.Any(x => x.JobId == item.JobId))
-                    {
-                        <i class="fas fa-heart" style="color:red;cursor:pointer" onclick="location = '/Jobs/AddFavouriteJob/@item.JobId'"></i>
-                    }
-                    else
-                    {
-                        if (Session["User"] != null)
+        foreach (var item in Model)
+        {
+            <!-- single-job-content -->
+            <div class="single-job-items mb-30">
+                <div class="job-items">
+                    <div class="company-img">
+                        <a href="/Jobs/Detail/@item.JobId"><img src="/assets/img/icon/@item.CompanyImage" alt="" style="width:100px"></a>
+                    </div>
+                    <div class="job-tittle job-tittle2">
+                        <a href="/Jobs/Detail/@item.JobId">
+                            <h4>@item.Title</h4>
+                        </a>
+                        <ul>
+                            <li>@item.CompanyName</li>
+                            <li><i class="fas fa-map-marker-alt"></i>@item.State, @item.Country</li>
+                            <li>@item.Salary</li>
+                        </ul>
+                        @if (favouriteJobs != null && favouriteJobs.Any(x => x.JobId == item.JobId))
                         {
-                            <i class="fa fa-heart" style="color:gray;cursor:pointer;" onclick="location = '/Jobs/AddFavouriteJob/@item.JobId'"></i>
+                            <i class="fas fa-heart" style="color:red;cursor:pointer" onclick="location = '/Jobs/AddFavouriteJob/@item.JobId'"></i>
                         }
                         else
                         {
-                            <i class="fas fa-heart" style="color: gray; cursor: default"></i>
+                            if (Session["User"] != null)
+                            {
+                                <i class="fa fa-heart" style="color:gray;cursor:pointer;" onclick="location = '/Jobs/AddFavouriteJob/@item.JobId'"></i>
+                            }
+                            else
+                            {
+                                <i class="fas fa-heart" style="color: gray; cursor: default"></i>
+                            }
                         }
-                    }
+                    </div>
+                </div>
+                <div class="items-link items-link2 f-right">
+                    <a href="/Jobs/Detail/@item.JobId">@item.JobType</a>
+                    <span class="CreatedDate">@item.CreateDate</span>
                 </div>
             </div>
-            <div class="items-link items-link2 f-right">
-                <a href="/Jobs/Detail/@item.JobId">@item.JobType</a>
-                <span class="CreatedDate">@item.CreateDate</span>
-            </div>
-        </div>
+        }
     }
 </div>
